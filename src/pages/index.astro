@@ -1,0 +1,325 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// ✏️ Edit everything in this block to make the site yours.
+const name = 'Chase Nortman';
+const tagline = 'Developer building thoughtful things for the web.';
+const intro =
+  "Hi, I'm Chase. This is my corner of the internet — a place for the projects I'm working on, what I've learned along the way, and how to reach me.";
+
+const about = [
+  'Write a few sentences about who you are, what you do, and what you care about.',
+  "Mention the kind of work you enjoy, the tools you like using, or what you're currently learning.",
+];
+
+const projects = [
+  {
+    title: 'Personal Website',
+    description: 'The site you are looking at, built with Astro and deployed with GitHub Pages.',
+    tags: ['Astro', 'GitHub Actions'],
+    link: 'https://github.com/cnortman/personalwebsite',
+  },
+  {
+    title: 'Project Two',
+    description: 'A short description of what this project does and why you built it.',
+    tags: ['Tag', 'Tag'],
+    link: '#',
+  },
+  {
+    title: 'Project Three',
+    description: 'A short description of what this project does and why you built it.',
+    tags: ['Tag', 'Tag'],
+    link: '#',
+  },
+];
+
+const links = [
+  { label: 'GitHub', href: 'https://github.com/cnortman' },
+  { label: 'LinkedIn', href: '#' },
+  { label: 'Email', href: 'mailto:you@example.com' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<Layout>
+  <header class="nav wrap">
+    <a href="/" class="mark">CN</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="eyebrow">{tagline}</p>
+      <h1>{name}</h1>
+      <p class="lede">{intro}</p>
+      <div class="actions">
+        <a class="btn primary" href="#projects">See my work</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </section>
+
+    <section id="about" class="section wrap">
+      <h2>About</h2>
+      <div class="prose">
+        {about.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
+    <section id="projects" class="section wrap">
+      <h2>Projects</h2>
+      <ul class="grid">
+        {
+          projects.map((project) => (
+            <li class="card">
+              <a href={project.link}>
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+                <ul class="tags">
+                  {project.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="contact" class="section wrap">
+      <h2>Contact</h2>
+      <p class="prose">The best way to reach me is below. I'm always happy to talk about new projects and ideas.</p>
+      <ul class="links">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label} ↗</a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <p>© {year} {name}</p>
+  </footer>
+</Layout>
+
+<style>
+  .wrap {
+    width: 100%;
+    max-width: 960px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 28px;
+  }
+
+  .mark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  .nav nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .nav nav a:hover {
+    color: var(--text);
+  }
+
+  .hero {
+    padding-block: 96px 80px;
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .lede {
+    max-width: 38rem;
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin: 24px 0 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .btn:hover {
+    border-color: var(--text);
+  }
+
+  .btn.primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .btn.primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .section {
+    padding-block: 64px;
+    border-top: 1px solid var(--line);
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+
+  .prose {
+    max-width: 40rem;
+    color: var(--muted);
+  }
+
+  .prose p {
+    margin: 0 0 1em;
+  }
+
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    text-decoration: none;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+
+  .card a:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+
+  .card h3 {
+    font-size: 1.3rem;
+  }
+
+  .card p {
+    color: var(--muted);
+    margin: 10px 0 18px;
+    flex: 1;
+  }
+
+  .tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tags li {
+    font-size: 0.8rem;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+
+  .links a {
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+
+  .footer {
+    padding-block: 32px 48px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 540px) {
+    .nav nav {
+      gap: 16px;
+    }
+
+    .hero {
+      padding-block: 56px 48px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .card a {
+      transition: none;
+    }
+  }
+</style>
