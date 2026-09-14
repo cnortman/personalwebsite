@@ -1,0 +1,153 @@
+---
+import Sparkline from '../charts/Sparkline.astro';
+import Status from '../ui/Status.astro';
+import { padIndex, type Project } from '../../lib/projects';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const { title, tagline, technologies, status } = project.data;
+---
+
+<article class="card">
+  <div class="top">
+    <span class="mono muted index">{padIndex(index + 1)}</span>
+    {status && <Status status={status} />}
+  </div>
+
+  <h3 class="title" transition:name={`project-title-${project.id}`}>
+    <a href={`/work/${project.id}`} class="link">{title}</a>
+  </h3>
+  <p class="tagline">{tagline}</p>
+
+  <div class="visual" transition:name={`project-visual-${project.id}`}>
+    <Sparkline seed={project.id} />
+  </div>
+
+  <div class="bottom">
+    <ul class="tech" role="list">
+      {technologies.map((technology) => <li class="chip">{technology}</li>)}
+    </ul>
+    <span class="cta" aria-hidden="true">View project <span class="arrow">→</span></span>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition:
+      background var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+  }
+
+  .card:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+  }
+
+  .card:has(.link:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .link:focus-visible {
+    outline: none;
+  }
+
+  /* The title link covers the whole card, keeping one concise accessible name. */
+  .link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .index {
+    font-size: var(--text-xs);
+  }
+
+  .title {
+    margin-top: var(--space-5);
+    font-size: var(--text-xl);
+    font-weight: 540;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .tagline {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+  }
+
+  .visual {
+    margin-block: var(--space-3);
+    padding-block: var(--space-2);
+    border-block: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    transition: color var(--duration-base) var(--ease-out);
+  }
+
+  .card:hover .visual {
+    color: var(--color-accent);
+  }
+
+  .card:hover .visual :global(.sparkline__line) {
+    animation: draw-line 1100ms var(--ease-out) both;
+  }
+
+  .bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: auto;
+  }
+
+  .tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .cta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .arrow {
+    display: inline-block;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .card:hover .cta {
+    color: var(--color-text);
+  }
+
+  .card:hover .arrow {
+    transform: translateX(4px);
+  }
+</style>

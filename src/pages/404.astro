@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+---
+
+<BaseLayout title="Not found">
+  <PageHeader eyebrow="404" title="This page doesn't exist." lede="The link may be outdated, or the page may have moved.">
+    <a class="button button--primary" href="/">Back home</a>
+    <a class="button" href="/work">View work</a>
+  </PageHeader>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import Timeline from '../../components/experience/Timeline.astro';
+---
+
+<BaseLayout title="Experience" description="From financial systems to software: audit, financial transformation, and investment analytics.">
+  <PageHeader
+    eyebrow="Experience"
+    title="From financial systems to software."
+    lede="Fund valuation audit, M&A due diligence, and automation — and the software I've built along the way."
+  />
+  <section class="container page-body" aria-labelledby="timeline-title">
+    <h2 id="timeline-title" class="visually-hidden">Timeline</h2>
+    <Timeline detailed />
+  </section>
+</BaseLayout>

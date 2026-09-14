@@ -1,0 +1,177 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { nav, site } from '../../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header" transition:animate="none">
+  <div class="container inner">
+    <a href="/" class="wordmark">
+      <span class="wordmark__mark" aria-hidden="true"></span>
+      {site.name}
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul role="list">
+        {
+          nav.map((item, i) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={['site-nav__link', { 'is-primary': i === 0 }]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="actions">
+      {
+        site.openToOpportunities && (
+          <span class="availability">
+            <span class="availability__dot" aria-hidden="true" />
+            Open to opportunities
+          </span>
+        )
+      }
+      <a href="/resume" class="button button--small" aria-current={isActive('/resume') ? 'page' : undefined}>
+        Resume
+      </a>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    -webkit-backdrop-filter: saturate(140%) blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: var(--header-height);
+  }
+
+  .wordmark {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .wordmark__mark {
+    width: 9px;
+    height: 9px;
+    border: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .wordmark:hover .wordmark__mark {
+    transform: rotate(225deg);
+  }
+
+  .site-nav ul {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .site-nav__link {
+    position: relative;
+    display: inline-block;
+    padding-block: 6px;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .site-nav__link:hover,
+  .site-nav__link.is-primary,
+  .site-nav__link[aria-current='page'] {
+    color: var(--color-text);
+  }
+
+  .site-nav__link[aria-current='page']::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .actions {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .availability {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-right: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .availability__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-positive);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-positive) 20%, transparent);
+  }
+
+  @media (max-width: 1180px) {
+    .availability {
+      display: none;
+    }
+  }
+
+  @media (max-width: 719px) {
+    .inner {
+      grid-template-columns: 1fr auto;
+      row-gap: 0;
+    }
+
+    .site-nav {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      padding-bottom: var(--space-1);
+      overflow-x: auto;
+    }
+
+    .site-nav ul {
+      gap: var(--space-3);
+    }
+  }
+</style>

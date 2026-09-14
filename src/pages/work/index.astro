@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { getProjects } from '../../lib/projects';
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Work"
+  description="Case studies at the intersection of finance, data, and software: the problem, the approach, and what I learned."
+>
+  <PageHeader
+    eyebrow="Work"
+    title="Analysis, turned into working software."
+    lede="Each project is written up as a case study: the problem, why it matters, how I approached it, and what I learned along the way."
+  />
+  <section class="container page-body" aria-labelledby="projects-title">
+    <h2 id="projects-title" class="visually-hidden">Projects</h2>
+    <div class="work-grid">
+      {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+    </div>
+  </section>
+</BaseLayout>

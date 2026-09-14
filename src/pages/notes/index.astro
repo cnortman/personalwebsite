@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+---
+
+<BaseLayout title="Notes" description="Short research notes on financial analytics, SQL, data engineering, and building software.">
+  <PageHeader
+    eyebrow="Notes"
+    title="Short research notes."
+    lede="Financial analytics, SQL, data engineering, investment analysis, and what I learn while building software."
+  />
+  <section class="container page-body" aria-label="Notes">
+    <div class="panel empty">
+      <p class="eyebrow muted">Index</p>
+      <p class="mono">No notes published yet.</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .empty {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    max-width: 560px;
+  }
+</style>

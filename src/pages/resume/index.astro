@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import Timeline from '../../components/experience/Timeline.astro';
+import { site } from '../../data/site';
+---
+
+<BaseLayout title="Resume">
+  <PageHeader
+    eyebrow="Resume"
+    title="Resume"
+    lede="The PDF is the canonical version. An interactive version in the site's own visual language is on the way."
+  >
+    {
+      site.resumePdf ? (
+        <a class="button button--primary" href={site.resumePdf}>
+          Download PDF <span aria-hidden="true">↓</span>
+        </a>
+      ) : (
+        <p class="chip">PDF · coming soon</p>
+      )
+    }
+  </PageHeader>
+
+  <section class="container page-body" aria-labelledby="resume-experience">
+    <h2 id="resume-experience" class="eyebrow">Experience</h2>
+    <div class="timeline">
+      <Timeline detailed />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .timeline {
+    margin-top: var(--space-3);
+  }
+</style>

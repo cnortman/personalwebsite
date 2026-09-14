@@ -1,0 +1,205 @@
+---
+import { experienceByYear, kindLabels } from '../../data/experience';
+
+interface Props {
+  /** Show highlights and tools for each role. */
+  detailed?: boolean;
+}
+
+const { detailed = false } = Astro.props;
+---
+
+<ol class:list={['timeline', { 'is-detailed': detailed }]} role="list">
+  {
+    experienceByYear.map(({ year, entries }) => (
+      <li class="year">
+        <p class="mono year__label">{year}</p>
+        <ul class="entries" role="list">
+          {entries.map((entry) => (
+            <li class="entry">
+              <span class="node" aria-hidden="true" />
+              <div class="entry__body">
+                <p class="eyebrow muted">{kindLabels[entry.kind]}</p>
+                <p class="entry__title">{entry.organization}</p>
+                <ul class="roles" role="list">
+                  {entry.roles.map((role) => (
+                    <li class="role">
+                      <p class="role__title">
+                        {role.title}
+                        {role.note && <span class="role__note"> · {role.note}</span>}
+                      </p>
+                      {detailed && role.highlights.length > 0 && (
+                        <ul class="highlights">
+                          {role.highlights.map((highlight) => (
+                            <li>{highlight}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {detailed && role.tools.length > 0 && (
+                        <ul class="tags" role="list" aria-label="Tools and focus areas">
+                          {role.tools.map((tool) => (
+                            <li class="chip">{tool}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {role.project && (
+                        <a class="link-arrow" href={`/work/${role.project}`}>
+                          View project <span aria-hidden="true">→</span>
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .year {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gap);
+    row-gap: var(--space-2);
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .year__label {
+    grid-column: 1 / span 3;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .entries {
+    grid-column: 4 / -1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .entries::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 4px;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: 9px minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+
+  .node {
+    width: 9px;
+    height: 9px;
+    margin-top: 0.3em;
+    border: 1.5px solid var(--color-border-strong);
+    border-radius: 50%;
+    background: var(--color-bg);
+  }
+
+  .entry__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .entry__title {
+    font-size: var(--text-xl);
+    font-weight: 520;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+
+  .roles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+
+  .role {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .role__title {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .role__note {
+    color: var(--color-text-muted);
+  }
+
+  .highlights {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    max-width: 72ch;
+    padding-left: 1.1em;
+    color: var(--color-text-secondary);
+  }
+
+  .highlights li::marker {
+    color: var(--color-text-muted);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* Detailed view: each role reads as its own block. */
+  .is-detailed .roles {
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .is-detailed .role + .role {
+    padding-top: var(--space-4);
+    border-top: 1px dashed var(--color-border);
+  }
+
+  .is-detailed .role__title {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .is-detailed .entries {
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 1023px) {
+    .year__label {
+      grid-column: 1 / span 2;
+    }
+
+    .entries {
+      grid-column: 3 / -1;
+    }
+  }
+
+  @media (max-width: 719px) {
+    .year__label,
+    .entries {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
