@@ -1,8 +1,8 @@
 ---
-import { experienceByYear, kindLabels } from '../../data/experience';
+import { experienceByYear } from '../../data/experience';
 
 interface Props {
-  /** Show highlights and tools for each role. */
+  /** Show metrics, highlights, and tools for each role. */
   detailed?: boolean;
 }
 
@@ -16,10 +16,9 @@ const { detailed = false } = Astro.props;
         <p class="mono year__label">{year}</p>
         <ul class="entries" role="list">
           {entries.map((entry) => (
-            <li class="entry">
+            <li class="entry" id={detailed ? entry.id : undefined}>
               <span class="node" aria-hidden="true" />
               <div class="entry__body">
-                <p class="eyebrow muted">{kindLabels[entry.kind]}</p>
                 <p class="entry__title">{entry.organization}</p>
                 <ul class="roles" role="list">
                   {entry.roles.map((role) => (
@@ -27,7 +26,23 @@ const { detailed = false } = Astro.props;
                       <p class="role__title">
                         {role.title}
                         {role.note && <span class="role__note"> · {role.note}</span>}
+                        {!detailed && role.metrics[0] && ' '}
+                        {!detailed && role.metrics[0] && (
+                          <span class="role__metric mono">
+                            {role.metrics[0].value} {role.metrics[0].label}
+                          </span>
+                        )}
                       </p>
+                      {detailed && role.metrics.length > 0 && (
+                        <dl class="metrics">
+                          {role.metrics.map((metric) => (
+                            <div class="metric">
+                              <dt>{metric.label}</dt>
+                              <dd class="mono">{metric.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
                       {detailed && role.highlights.length > 0 && (
                         <ul class="highlights">
                           {role.highlights.map((highlight) => (
@@ -41,11 +56,6 @@ const { detailed = false } = Astro.props;
                             <li class="chip">{tool}</li>
                           ))}
                         </ul>
-                      )}
-                      {role.project && (
-                        <a class="link-arrow" href={`/work/${role.project}`}>
-                          View project <span aria-hidden="true">→</span>
-                        </a>
                       )}
                     </li>
                   ))}
@@ -98,12 +108,13 @@ const { detailed = false } = Astro.props;
     display: grid;
     grid-template-columns: 9px minmax(0, 1fr);
     gap: var(--space-2);
+    scroll-margin-top: calc(var(--header-height) + var(--space-3));
   }
 
   .node {
     width: 9px;
     height: 9px;
-    margin-top: 0.3em;
+    margin-top: 0.55em;
     border: 1.5px solid var(--color-border-strong);
     border-radius: 50%;
     background: var(--color-bg);
@@ -126,7 +137,7 @@ const { detailed = false } = Astro.props;
   .roles {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     width: 100%;
   }
 
@@ -143,6 +154,48 @@ const { detailed = false } = Astro.props;
   }
 
   .role__note {
+    color: var(--color-text-muted);
+  }
+
+  .role__metric {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 1px 8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2px;
+    min-width: 140px;
+    padding: 10px 14px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .metric dd {
+    font-size: var(--text-xl);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .metric dt {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
   }
 
@@ -166,9 +219,17 @@ const { detailed = false } = Astro.props;
   }
 
   /* Detailed view: each role reads as its own block. */
+  .is-detailed .entries {
+    gap: var(--space-6);
+  }
+
   .is-detailed .roles {
     gap: var(--space-4);
     margin-top: var(--space-2);
+  }
+
+  .is-detailed .role {
+    gap: var(--space-2);
   }
 
   .is-detailed .role + .role {
@@ -180,10 +241,6 @@ const { detailed = false } = Astro.props;
     font-size: var(--text-base);
     font-weight: 500;
     color: var(--color-text);
-  }
-
-  .is-detailed .entries {
-    gap: var(--space-6);
   }
 
   @media (max-width: 1023px) {
@@ -200,6 +257,11 @@ const { detailed = false } = Astro.props;
     .year__label,
     .entries {
       grid-column: 1 / -1;
+    }
+
+    .role__metric {
+      display: table;
+      margin: 6px 0 0;
     }
   }
 </style>

@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/layout/Section.astro';
+import Intersection from '../components/intersection/Intersection.astro';
 import ProjectCard from '../components/projects/ProjectCard.astro';
 import Timeline from '../components/experience/Timeline.astro';
 import Status from '../components/ui/Status.astro';
 import { getProjects, padIndex } from '../lib/projects';
-import { disciplines, learningLoop, systemFlow } from '../data/technologies';
+import { learningLoop, systemFlow } from '../data/technologies';
 import { contactLinks } from '../data/site';
 
 const projects = await getProjects();
 const featured = projects.filter((project) => project.data.featured);
 const tracked = projects.filter((project) => project.data.status);
+const heroWords = ['Learning', 'Building', 'Analyzing'];
 ---
 
 <BaseLayout>
@@ -25,14 +27,25 @@ const tracked = projects.filter((project) => project.data.status);
     <div class="container grid hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">Finance <span class="x">×</span> Data <span class="x">×</span> Software</p>
-        <h1 id="hero-title" class="display">I learn complex systems and build useful things from them.</h1>
+        <h1 id="hero-title" class="display hero__title">
+          {
+            heroWords.map((word, i) => (
+              <span class="hero__word" style={`--i: ${i}`}>
+                <span class="hero__word-inner">
+                  {word}
+                  <span class="hero__dot">.</span>
+                </span>{' '}
+              </span>
+            ))
+          }
+        </h1>
         <p class="lede">
           Finance professional building analytical tools, data products, and software at the intersection of investment
           and technology.
         </p>
         <div class="hero__actions">
-          <a class="button button--primary" href="/work">View work <span aria-hidden="true">→</span></a>
-          <a class="button" href="/resume">Resume</a>
+          <a class="button button--primary" href="/experience">View experience <span aria-hidden="true">→</span></a>
+          <a class="button" href="/projects">Projects</a>
         </div>
       </div>
 
@@ -60,38 +73,19 @@ const tracked = projects.filter((project) => project.data.status);
   </section>
 
   <Section id="intersection" index="02" label="The intersection" title="Three disciplines. One workflow.">
-    <div class="intersection">
-      {
-        disciplines.map((discipline) => (
-          <div class="discipline">
-            <h3 class="eyebrow">{discipline.label}</h3>
-            <ul role="list">
-              {discipline.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-      <div class="converge" aria-hidden="true">
-        <svg viewBox="0 0 300 48" preserveAspectRatio="none">
-          <path d="M50 0 C50 30 150 18 150 48 M150 0 V48 M250 0 C250 30 150 18 150 48"></path>
-        </svg>
-      </div>
-      <p class="build"><span class="mono">Build</span></p>
-    </div>
+    <Intersection />
   </Section>
 
-  <Section id="work" index="03" label="Selected work" title="Analysis, turned into working software.">
+  <Section id="experience" index="03" label="Work experience" title="From financial systems to software.">
+    <Timeline />
+    <a class="link-arrow more" href="/experience">Full work experience <span aria-hidden="true">→</span></a>
+  </Section>
+
+  <Section id="projects" index="04" label="Projects" title="Things I've built.">
     <div class="work-grid">
       {featured.map((project, i) => <ProjectCard project={project} index={i} />)}
     </div>
-    <a class="link-arrow more" href="/work">All work <span aria-hidden="true">→</span></a>
-  </Section>
-
-  <Section id="experience" index="04" label="Experience" title="From financial systems to software.">
-    <Timeline />
-    <a class="link-arrow more" href="/experience">Full experience <span aria-hidden="true">→</span></a>
+    <a class="link-arrow more" href="/projects">All projects <span aria-hidden="true">→</span></a>
   </Section>
 
   <Section id="system" index="05" label="Technical system" title="How the tools connect.">
@@ -141,7 +135,7 @@ const tracked = projects.filter((project) => project.data.status);
           {
             tracked.map((project) => (
               <li>
-                <a href={`/work/${project.id}`}>{project.data.title}</a>
+                <a href={`/projects/${project.id}`}>{project.data.title}</a>
                 {project.data.status && <Status status={project.data.status} />}
               </li>
             ))
@@ -229,17 +223,32 @@ const tracked = projects.filter((project) => project.data.status);
     grid-column: 1 / span 8;
   }
 
-  .hero__copy > * {
+  .hero__copy > :not(h1) {
     animation: fade-up var(--duration-slow) var(--ease-out) both;
   }
 
-  .hero__copy > :nth-child(2) { animation-delay: 60ms; }
-  .hero__copy > :nth-child(3) { animation-delay: 120ms; }
-  .hero__copy > :nth-child(4) { animation-delay: 180ms; }
+  .hero__copy > :nth-child(3) { animation-delay: 420ms; }
+  .hero__copy > :nth-child(4) { animation-delay: 500ms; }
 
-  .hero .display {
-    max-width: 15ch;
+  .hero__title {
     margin-top: var(--space-3);
+  }
+
+  /* Each word rises into view from behind its own mask. */
+  .hero__word {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+  }
+
+  .hero__word-inner {
+    display: inline-block;
+    animation: word-up 900ms var(--ease-out) both;
+    animation-delay: calc(var(--i) * 120ms + 80ms);
+  }
+
+  .hero__dot {
+    color: var(--color-accent);
   }
 
   .hero .lede {
@@ -263,7 +272,7 @@ const tracked = projects.filter((project) => project.data.status);
     background: color-mix(in srgb, var(--color-surface) 80%, transparent);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    animation: fade-up var(--duration-slow) var(--ease-out) 240ms both;
+    animation: fade-up var(--duration-slow) var(--ease-out) 560ms both;
   }
 
   .readout div {
@@ -281,59 +290,6 @@ const tracked = projects.filter((project) => project.data.status);
 
   .readout dd {
     text-align: right;
-  }
-
-  /* 02 Intersection */
-  .intersection {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: var(--grid-gap);
-  }
-
-  .discipline {
-    padding-top: var(--space-2);
-    border-top: 1px solid var(--color-border-strong);
-  }
-
-  .discipline h3 {
-    color: var(--color-text);
-  }
-
-  .discipline ul {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    margin-top: var(--space-3);
-    color: var(--color-text-secondary);
-  }
-
-  .converge {
-    grid-column: 1 / -1;
-    margin-top: var(--space-4);
-  }
-
-  .converge svg {
-    width: 100%;
-    height: 48px;
-  }
-
-  .converge path {
-    fill: none;
-    stroke: var(--color-border-strong);
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .build {
-    grid-column: 1 / -1;
-    justify-self: center;
-    padding: 10px var(--space-3);
-    border: 1px solid var(--color-accent);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
   }
 
   /* Shared */
@@ -530,19 +486,6 @@ const tracked = projects.filter((project) => project.data.status);
 
     .hero__lines span:nth-child(4) {
       border-inline-end: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
-    }
-
-    .intersection {
-      grid-template-columns: minmax(0, 1fr);
-      row-gap: var(--space-4);
-    }
-
-    .converge {
-      display: none;
-    }
-
-    .build {
-      justify-self: start;
     }
 
     .flow,

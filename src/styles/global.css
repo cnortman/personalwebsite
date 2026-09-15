@@ -122,14 +122,8 @@ a {
 
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: var(--grid-gap);
-}
-
-@media (max-width: 719px) {
-  .work-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 /* UI primitives */
@@ -243,6 +237,21 @@ a {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes word-up {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

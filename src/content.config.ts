@@ -11,7 +11,7 @@ const projects = defineCollection({
     tagline: z.string(),
     summary: z.string(),
     technologies: z.array(z.string()),
-    status: z.enum(['live', 'active', 'building', 'complete']).optional(),
+    status: z.enum(['live', 'active', 'building', 'complete', 'archived']).optional(),
     metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
     order: z.number(),
     featured: z.boolean().default(false),

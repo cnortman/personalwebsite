@@ -4,14 +4,51 @@ import PageHeader from '../../components/ui/PageHeader.astro';
 import Timeline from '../../components/experience/Timeline.astro';
 ---
 
-<BaseLayout title="Experience" description="From financial systems to software: audit, financial transformation, and investment analytics.">
+<BaseLayout
+  title="Work experience"
+  description="Fund valuation audit at Deloitte, M&A due diligence at HCVT, intelligent automation, and analytics."
+>
   <PageHeader
-    eyebrow="Experience"
+    eyebrow="Work experience"
     title="From financial systems to software."
-    lede="Fund valuation audit, M&A due diligence, and automation — and the software I've built along the way."
+    lede="Fund valuation audit, M&A due diligence, and intelligent automation — the professional roles behind the work."
   />
   <section class="container page-body" aria-labelledby="timeline-title">
-    <h2 id="timeline-title" class="visually-hidden">Timeline</h2>
+    <h2 id="timeline-title" class="visually-hidden">Roles by year</h2>
     <Timeline detailed />
+
+    <a class="panel crosslink" href="/projects">
+      <span class="eyebrow muted">Looking for independent builds?</span>
+      <span class="crosslink__title">Projects <span aria-hidden="true" class="crosslink__arrow">→</span></span>
+    </a>
   </section>
 </BaseLayout>
+
+<style>
+  .crosslink {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: var(--space-8);
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .crosslink:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .crosslink__title {
+    font-size: var(--text-xl);
+    font-weight: 520;
+    letter-spacing: -0.015em;
+  }
+
+  .crosslink__arrow {
+    display: inline-block;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .crosslink:hover .crosslink__arrow {
+    transform: translateX(4px);
+  }
+</style>

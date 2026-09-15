@@ -14,12 +14,12 @@ const { title, tagline, technologies, status } = project.data;
 
 <article class="card">
   <div class="top">
-    <span class="mono muted index">{padIndex(index + 1)}</span>
+    <span class="mono muted index">Project {padIndex(index + 1)}</span>
     {status && <Status status={status} />}
   </div>
 
   <h3 class="title" transition:name={`project-title-${project.id}`}>
-    <a href={`/work/${project.id}`} class="link">{title}</a>
+    <a href={`/projects/${project.id}`} class="link">{title}</a>
   </h3>
   <p class="tagline">{tagline}</p>
 

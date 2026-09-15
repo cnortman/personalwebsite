@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { getProjects } from '../../lib/projects';
+
+const projects = await getProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Projects at the intersection of finance, data, and software, each written up as a case study."
+>
+  <PageHeader
+    eyebrow="Projects"
+    title="Things I've built."
+    lede="Projects, kept separate from work experience. Each is written up as a case study: the problem, why it matters, the approach, and what I learned."
+  />
+  <section class="container page-body" aria-labelledby="projects-title">
+    <h2 id="projects-title" class="visually-hidden">All projects</h2>
+    <div class="work-grid">
+      {projects.map((project, i) => <ProjectCard project={project} index={i} />)}
+    </div>
+
+    <a class="panel crosslink" href="/experience">
+      <span class="eyebrow muted">Looking for professional roles?</span>
+      <span class="crosslink__title">Work experience <span aria-hidden="true" class="crosslink__arrow">→</span></span>
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  .crosslink {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: var(--space-8);
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .crosslink:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .crosslink__title {
+    font-size: var(--text-xl);
+    font-weight: 520;
+    letter-spacing: -0.015em;
+  }
+
+  .crosslink__arrow {
+    display: inline-block;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .crosslink:hover .crosslink__arrow {
+    transform: translateX(4px);
+  }
+</style>

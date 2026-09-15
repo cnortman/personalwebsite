@@ -8,6 +8,7 @@ export const statusLabels: Record<ProjectStatus, string> = {
   active: 'Active',
   building: 'Building',
   complete: 'Complete',
+  archived: 'Archived',
 };
 
 export async function getProjects(): Promise<Project[]> {

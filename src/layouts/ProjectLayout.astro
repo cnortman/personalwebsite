@@ -21,8 +21,8 @@ const sections = headings.filter((heading) => heading.depth === 2);
   <article>
     <header class="project-header">
       <div class="container">
-        <a href="/work" class="back">
-          <span aria-hidden="true">←</span> All work
+        <a href="/projects" class="back">
+          <span aria-hidden="true">←</span> All projects
         </a>
 
         <div class="grid intro">
@@ -97,7 +97,7 @@ const sections = headings.filter((heading) => heading.depth === 2);
     {
       next && (
         <footer class="next">
-          <a href={`/work/${next.id}`} class="container next__link">
+          <a href={`/projects/${next.id}`} class="container next__link">
             <span class="eyebrow muted">Next project</span>
             <span class="h2 next__title">
               {next.data.title} <span aria-hidden="true" class="next__arrow">→</span>

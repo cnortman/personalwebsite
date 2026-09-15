@@ -4,7 +4,7 @@ category: Market Data
 tagline: Market data · screening · investor education
 summary: A market terminal built in 2020 to help the wave of new retail investors understand company financial health and the overall market.
 technologies: [Excel, Python, Quandl API, Yahoo Finance API, Web Scrapers, FINRA, SEC EDGAR]
-status: live
+status: archived
 metrics:
   - label: Built
     value: '2020'
