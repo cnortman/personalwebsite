@@ -24,9 +24,6 @@ Blackwater Market Terminal is a market terminal designed to educate and inform i
 
 During the middle of the 2020 pandemic, a vast influx of retail investors entered the market. There was no platform that simply, but thoroughly, educated new investors on a company's financial health and on the overall market.
 
-## Why it matters
-
-> Draft — to be written
 
 ## Approach
 
@@ -46,19 +43,3 @@ The goal was to educate and inform investors by providing sentiment analysis on 
 - **Federal Reserve yields** — shown at the bottom, with the ability to switch time perspectives for different investor views.
 - **Scanner** — a list of Blackwater's picks for volatile or interesting stocks.
 - **Screener** — an interactive screener with 51 categories and up to 16 options each, to tailor stock selection to exactly what you're looking for.
-
-## Analysis
-
-> Draft — to be written
-
-## Result
-
-> Draft — to be written
-
-## What I learned
-
-> Draft — to be written
-
-## What I'd do next
-
-> Draft — to be written
