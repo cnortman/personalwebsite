@@ -5,13 +5,6 @@ tagline: Revenue → product → supplier → raw material
 summary: Traces what a public company's products are made of, who makes each part, where, and which raw materials sit underneath. Every link has a source, and anything unknown stays marked as unknown.
 technologies: [Python, FastAPI, PostgreSQL, PostGIS, TypeScript, React, Three.js, Astro, Claude, Docker]
 status: building
-metrics:
-  - label: Companies traced
-    value: NVIDIA · Tesla
-  - label: Tesla graph
-    value: 66 nodes · 102 edges
-  - label: Confidence states
-    value: '4'
 order: 1
 featured: true
 cover: ../../assets/projects/trace/01-h100-overview.png
@@ -61,6 +54,9 @@ Tesla's graph was built with no code changes, which shows the model works outsid
 Two pipelines run alongside the graph. **Filing extraction** uses Claude Haiku 4.5 to pull named suppliers and purchased inputs from annual reports, and a claim counts only if its quote is found in the filing. **Commodity research** searches the web for commodities the chain uses beyond what the filings say, and every finding must carry a citation that names the commodity.
 
 ## System / architecture
+
+[![Architecture of TRACE in five stages: sources such as SEC EDGAR and web pages feed a cleaned-text cache and graph datasets; a validator and word-for-word quote check gate loading into PostgreSQL; a traversal engine and FastAPI serve the globe, product panel, sources dialog and disruption views. Filing extraction and commodity research run beside the graph.](/projects/trace/architecture.png)](/projects/trace/architecture.png)
+*From filing to globe. Nothing reaches the database until the validator finds zero errors and every quote is found in its saved source. Select the diagram to open it full size.*
 
 - **Web:** Astro, TypeScript and React, with a Three.js globe behind an imperative API.
 - **API:** FastAPI on Python 3.12, SQLAlchemy and Alembic, covering the graph, traversal, impact analysis and reports.

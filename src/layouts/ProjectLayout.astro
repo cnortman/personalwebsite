@@ -315,14 +315,16 @@ const sections = headings.filter((heading) => heading.depth === 2);
     font-size: 0.875em;
   }
 
-  .prose :global(p:has(> img)) {
+  .prose :global(p:has(> img)),
+  .prose :global(p:has(> a > img)) {
     margin-top: var(--space-4);
     font-size: var(--text-sm);
     line-height: 1.5;
     color: var(--color-text-muted);
   }
 
-  .prose :global(p > img) {
+  .prose :global(p > img),
+  .prose :global(p > a > img) {
     display: block;
     width: 100%;
     height: auto;
@@ -331,7 +333,13 @@ const sections = headings.filter((heading) => heading.depth === 2);
     border-radius: var(--radius-md);
   }
 
-  .prose :global(p:has(> img) em) {
+  .prose :global(a:has(> img)) {
+    display: block;
+    text-decoration: none;
+    cursor: zoom-in;
+  }
+
+  .prose :global(p:has(img) em) {
     font-style: normal;
   }
 

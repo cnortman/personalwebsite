@@ -1,0 +1,131 @@
+%% Rendered to public/projects/trace/architecture.png (fonts are baked in, so every label fits):
+%% npx -y @mermaid-js/mermaid-cli@11 -i src/assets/projects/trace/architecture.mmd -o public/projects/trace/architecture.png -b "#080a0f" -w 1300 -s 2 -c src/assets/projects/trace/architecture.config.json
+%%{init: {"theme": "base", "themeVariables": {
+  "background": "#080a0f",
+  "fontFamily": "Segoe UI, Arial, sans-serif",
+  "fontSize": "14px",
+  "primaryColor": "#121821",
+  "primaryTextColor": "#f4f6f8",
+  "primaryBorderColor": "#303a47",
+  "lineColor": "#6f7885",
+  "clusterBkg": "#0d1118",
+  "clusterBorder": "#232b36",
+  "titleColor": "#a2aab7",
+  "edgeLabelBackground": "#0d1118",
+  "tertiaryTextColor": "#a2aab7"
+}, "flowchart": {"curve": "basis", "nodeSpacing": 26, "rankSpacing": 40, "padding": 16, "subGraphTitleMargin": {"top": 6, "bottom": 12}, "wrappingWidth": 280}}}%%
+flowchart TB
+  subgraph S1["01 · SOURCES"]
+    direction LR
+    sec["`**SEC EDGAR**
+10-K · 20-F · Form SD
+8-K update decks`"]:::primary
+    web["`**Web sources**
+supplier pages · government
+trade press · captured`"]:::source
+    wb["`**Your research**
+BOM workbook · tier 7
+structure only, corrected`"]:::assumption
+  end
+
+  subgraph S2["02 · EVIDENCE"]
+    direction LR
+    cache[("`**Cleaned-text cache**
+data/cache/cleaned
+one file per SHA-256`")]:::store
+    yaml["`**Graph datasets**
+nvda · nvda-h100 · tsla
+nodes · edges · facts · BOM`"]:::research
+    catalog["`**Commodity catalog**
+codes · aliases · prices`"]:::source
+  end
+
+  subgraph S3["03 · VALIDATION"]
+    direction LR
+    rules{{"`**Validator**
+categories · layers
+confidence rules · dates`"}}:::gate
+    quotes{{"`**Quote check**
+word for word
+against the cache`"}}:::gate
+  end
+
+  subgraph S4["04 · GRAPH ENGINE"]
+    direction LR
+    pg[("`**PostgreSQL**
+PostGIS · versioned datasets`")]:::store
+    engine["`**Traversal → reports**
+upstream tree · buyer context
+product · globe · impact · sources`"]:::engine
+    api(["`**FastAPI**
+/supply-graph endpoints`"]):::engine
+  end
+
+  subgraph S5["05 · WORKSPACE"]
+    direction LR
+    globe["`**Globe**
+sites at state or country
+arcs coloured by weakest link`"]:::ui
+    product["`**Product panel**
+how it is made · BOM
+revenue lines it sits in`"]:::ui
+    sources["`**Sources dialog**
+filing · external · workbook
+a quote per claim`"]:::confirmed
+    impact["`**Disruption**
+material price · country
+SOLE · PARTIAL · POSSIBLE`"]:::ui
+    scenario["`**Estimate**
+only from your assumptions
+labelled as yours`"]:::assumption
+  end
+
+  subgraph SIDE["BESIDE THE GRAPH"]
+    direction LR
+    filing["`**Filing supply chain**
+Claude Haiku · quote-verified
+guesses stay UNVERIFIED`"]:::side
+    research["`**Commodity research**
+cited web search
+World Bank · USGS`"]:::side
+  end
+
+  sec --> cache
+  web --> cache
+  wb --> cache
+  cache --> yaml
+  catalog --> rules
+  yaml --> rules
+  yaml --> quotes
+  cache -. "saved text" .-> quotes
+  rules -- "0 errors" --> pg
+  quotes -- "every quote found" --> pg
+  pg --> engine --> api
+  api --> globe
+  api --> product
+  product --> sources
+  product --> impact
+  impact --> scenario
+  sec --> filing
+  filing --> pg
+  research --> pg
+
+  classDef primary fill:#121821,stroke:#35c98a,stroke-width:1.5px,color:#f4f6f8
+  classDef source fill:#121821,stroke:#303a47,stroke-width:1px,color:#f4f6f8
+  classDef research fill:#121821,stroke:#5b9cff,stroke-width:1.5px,color:#f4f6f8
+  classDef store fill:#0d1118,stroke:#75d7ff,stroke-width:1.5px,color:#f4f6f8
+  classDef gate fill:#121821,stroke:#f2b84b,stroke-width:1.5px,color:#f4f6f8
+  classDef engine fill:#171e28,stroke:#5b9cff,stroke-width:1px,color:#f4f6f8
+  classDef ui fill:#142033,stroke:#5b9cff,stroke-width:1.5px,color:#f4f6f8
+  classDef confirmed fill:#0f2219,stroke:#35c98a,stroke-width:1.5px,color:#f4f6f8
+  classDef assumption fill:#241c0c,stroke:#f2b84b,stroke-width:1.5px,stroke-dasharray:5 4,color:#f4f6f8
+  classDef side fill:#0d1118,stroke:#6f7885,stroke-width:1px,stroke-dasharray:3 3,color:#a2aab7
+
+  style S1 fill:#0d1118,stroke:#232b36,color:#a2aab7
+  style S2 fill:#0d1118,stroke:#232b36,color:#a2aab7
+  style S3 fill:#0d1118,stroke:#232b36,color:#a2aab7
+  style S4 fill:#0d1118,stroke:#232b36,color:#a2aab7
+  style S5 fill:#0d1118,stroke:#232b36,color:#a2aab7
+  style SIDE fill:#080a0f,stroke:#303a47,stroke-dasharray:4 4,color:#6f7885
+
+  linkStyle default stroke:#6f7885,stroke-width:1.4px
