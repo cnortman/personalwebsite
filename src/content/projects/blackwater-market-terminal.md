@@ -14,6 +14,7 @@ metrics:
     value: Up to 16
 order: 2
 featured: true
+locked: true
 ---
 
 ## Overview

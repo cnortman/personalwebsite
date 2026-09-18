@@ -5,10 +5,10 @@ export const references = {
   hcvt: { kind: 'experience', label: 'HCVT · Audit and M&A Advisory', href: '/experience#hcvt-2024' },
   'deloitte-rpa': { kind: 'experience', label: 'Deloitte · Audit and Assurance (RPA)', href: '/experience#deloitte-2023' },
   uci: { kind: 'experience', label: 'UCI · Program Associate', href: '/experience#uci-2022' },
-  blackwater: { kind: 'project', label: 'Blackwater Market Terminal', href: '/projects/blackwater-market-terminal' },
+  blackwater: { kind: 'project', label: 'Blackwater Market Terminal' },
   trace: { kind: 'project', label: 'TRACE', href: '/projects/trace' },
   site: { kind: 'project', label: 'This website', href: 'https://github.com/cnortman/personalwebsite' },
-} as const satisfies Record<string, { kind: 'experience' | 'project'; label: string; href: string }>;
+} as const satisfies Record<string, { kind: 'experience' | 'project'; label: string; href?: string }>;
 
 export type ReferenceKey = keyof typeof references;
 

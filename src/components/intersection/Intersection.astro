@@ -151,7 +151,11 @@ const groups = [
                       <ul role="list">
                         {keys.map((key, i) => (
                           <li style={`--i: ${i}`}>
-                            <a href={references[key].href}>{references[key].label}</a>
+                            {'href' in references[key] ? (
+                              <a href={references[key].href}>{references[key].label}</a>
+                            ) : (
+                              <span>{references[key].label}</span>
+                            )}
                           </li>
                         ))}
                       </ul>

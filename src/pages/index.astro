@@ -135,7 +135,11 @@ const heroWords = ['Learning', 'Building', 'Analyzing'];
           {
             tracked.map((project) => (
               <li>
-                <a href={`/projects/${project.id}`}>{project.data.title}</a>
+                {project.data.locked ? (
+                  <span>{project.data.title}</span>
+                ) : (
+                  <a href={`/projects/${project.id}`}>{project.data.title}</a>
+                )}
                 {project.data.status && <Status status={project.data.status} />}
               </li>
             ))

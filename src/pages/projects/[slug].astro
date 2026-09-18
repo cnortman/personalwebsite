@@ -5,16 +5,17 @@ import { getProjects, type Project } from '../../lib/projects';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
-  return projects.map((project, index) => ({
+  const open = projects.filter((project) => !project.data.locked);
+  return open.map((project, i) => ({
     params: { slug: project.id },
-    props: { project, index, next: projects[(index + 1) % projects.length] },
+    props: { project, index: projects.indexOf(project), next: open.length > 1 ? open[(i + 1) % open.length] : undefined },
   }));
 }
 
 interface Props {
   project: Project;
   index: number;
-  next: Project;
+  next?: Project;
 }
 
 const { project, index, next } = Astro.props;

@@ -10,17 +10,17 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { title, tagline, technologies, status, cover, coverAlt } = project.data;
+const { title, tagline, technologies, status, cover, coverAlt, locked } = project.data;
 ---
 
-<article class="card">
+<article class:list={['card', { 'card--locked': locked }]}>
   <div class="top">
     <span class="mono muted index">Project {padIndex(index + 1)}</span>
     {status && <Status status={status} />}
   </div>
 
   <h3 class="title" transition:name={`project-title-${project.id}`}>
-    <a href={`/projects/${project.id}`} class="link">{title}</a>
+    {locked ? title : <a href={`/projects/${project.id}`} class="link">{title}</a>}
   </h3>
   <p class="tagline">{tagline}</p>
 
@@ -38,7 +38,21 @@ const { title, tagline, technologies, status, cover, coverAlt } = project.data;
     <ul class="tech" role="list">
       {technologies.map((technology) => <li class="chip">{technology}</li>)}
     </ul>
-    <span class="cta" aria-hidden="true">View project <span class="arrow">→</span></span>
+    {
+      locked ? (
+        <span class="cta cta--locked">
+          <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+            <rect x="3" y="7" width="10" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4" />
+            <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.4" />
+          </svg>
+          Locked
+        </span>
+      ) : (
+        <span class="cta" aria-hidden="true">
+          View project <span class="arrow">→</span>
+        </span>
+      )
+    }
   </div>
 </article>
 
@@ -61,6 +75,34 @@ const { title, tagline, technologies, status, cover, coverAlt } = project.data;
     background: var(--color-surface-hover);
     border-color: var(--color-border-strong);
     transform: translateY(-2px);
+  }
+
+  .card--locked,
+  .card--locked:hover {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    transform: none;
+  }
+
+  .card--locked .visual,
+  .card--locked:hover .visual {
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  .card--locked:hover .visual :global(.sparkline__line) {
+    animation: none;
+  }
+
+  .cta--locked {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-text-muted);
+  }
+
+  .card--locked:hover .cta {
+    color: var(--color-text-muted);
   }
 
   .card:has(.link:focus-visible) {

@@ -16,6 +16,8 @@ const projects = defineCollection({
       metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
       order: z.number(),
       featured: z.boolean().default(false),
+      /** Show the card, but don't publish the case study or link to it. */
+      locked: z.boolean().default(false),
       /** Screenshot shown on the project card and, without a video, in the page header. */
       cover: image().optional(),
       coverAlt: z.string().optional(),
