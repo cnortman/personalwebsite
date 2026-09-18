@@ -1,0 +1,2 @@
+/* Forces an installed font at render time; the init block font list falls back to serif in mermaid-cli. */
+* { font-family: "Segoe UI", Arial, sans-serif !important; }

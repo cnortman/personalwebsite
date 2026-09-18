@@ -55,8 +55,23 @@ Two pipelines run alongside the graph. **Filing extraction** uses Claude Haiku 4
 
 ## System / architecture
 
-[![Architecture of TRACE in five stages: sources such as SEC EDGAR and web pages feed a cleaned-text cache and graph datasets; a validator and word-for-word quote check gate loading into PostgreSQL; a traversal engine and FastAPI serve the globe, product panel, sources dialog and disruption views. Filing extraction and commodity research run beside the graph.](/projects/trace/architecture.png)](/projects/trace/architecture.png)
-*From filing to globe. Nothing reaches the database until the validator finds zero errors and every quote is found in its saved source. Select the diagram to open it full size.*
+### How data flows through TRACE
+
+From a filing or a web page to a line on the globe. Every stage keeps the evidence attached: a quote is checked word for word against the saved source before a graph loads, and each relationship carries its own confidence all the way to the screen.
+
+[![How data flows through TRACE in five stages: sources such as SEC EDGAR and web pages feed a cleaned-text cache and graph datasets; a validator and word-for-word quote check gate loading into PostgreSQL; a traversal engine and FastAPI serve the globe, product panel, sources dialog and disruption views. Filing extraction and commodity research run beside the graph.](/projects/trace/architecture.png)](/projects/trace/architecture.png)
+*Select the diagram to open it full size.*
+
+| Colour | Means the same as in the app |
+| --- | --- |
+| <span class="swatch" style="--swatch: #35c98a"></span>Green border | Primary, confirmed evidence: filings and the sources dialog |
+| <span class="swatch" style="--swatch: #5b9cff"></span>Blue | TRACE's own research and the workspace views |
+| <span class="swatch" style="--swatch: #75d7ff"></span>Cyan | Stored data: the source cache and the database |
+| <span class="swatch" style="--swatch: #f2b84b"></span>Amber | A gate that can refuse a dataset, or anything built on your own input |
+| <span class="swatch swatch--dashed" style="--swatch: #f2b84b"></span>Dashed amber | Your assumptions: the workbook and the estimate panel |
+| <span class="swatch swatch--dashed" style="--swatch: #6f7885"></span>Dashed grey | The filing and commodity pipelines that run beside the graph |
+
+### Stack
 
 - **Web:** Astro, TypeScript and React, with a Three.js globe behind an imperative API.
 - **API:** FastAPI on Python 3.12, SQLAlchemy and Alembic, covering the graph, traversal, impact analysis and reports.
