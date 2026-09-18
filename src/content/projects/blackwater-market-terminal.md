@@ -15,6 +15,8 @@ metrics:
 order: 2
 featured: true
 locked: true
+cover: ../../assets/projects/blackwater-market-terminal/home.png
+coverAlt: Blackwater Market Terminal home page showing equities, bonds, currencies and crypto prices, sector health and Federal Reserve yield charts.
 ---
 
 ## Overview

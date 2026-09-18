@@ -84,8 +84,8 @@ const { title, tagline, technologies, status, cover, coverAlt, locked } = projec
     transform: none;
   }
 
-  .card--locked .visual,
-  .card--locked:hover .visual {
+  .card--locked .visual:not(.visual--cover),
+  .card--locked:hover .visual:not(.visual--cover) {
     color: var(--color-text-muted);
     opacity: 0.6;
   }
