@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Sparkline from '../charts/Sparkline.astro';
 import Status from '../ui/Status.astro';
 import { padIndex, type Project } from '../../lib/projects';
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { title, tagline, technologies, status } = project.data;
+const { title, tagline, technologies, status, cover, coverAlt } = project.data;
 ---
 
 <article class="card">
@@ -23,8 +24,14 @@ const { title, tagline, technologies, status } = project.data;
   </h3>
   <p class="tagline">{tagline}</p>
 
-  <div class="visual" transition:name={`project-visual-${project.id}`}>
-    <Sparkline seed={project.id} />
+  <div class:list={['visual', { 'visual--cover': cover }]} transition:name={`project-visual-${project.id}`}>
+    {
+      cover ? (
+        <Image src={cover} alt={coverAlt ?? ''} widths={[480, 800, 1200]} sizes="(max-width: 767px) 100vw, 50vw" />
+      ) : (
+        <Sparkline seed={project.id} />
+      )
+    }
   </div>
 
   <div class="bottom">
@@ -108,6 +115,22 @@ const { title, tagline, technologies, status } = project.data;
 
   .card:hover .visual {
     color: var(--color-accent);
+  }
+
+  .visual--cover {
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .visual--cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: left top;
   }
 
   .card:hover .visual :global(.sparkline__line) {

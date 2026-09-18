@@ -4,18 +4,24 @@ import { z } from 'astro/zod';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    category: z.string(),
-    /** Short mono line, e.g. "Market data · analytics · visualization". */
-    tagline: z.string(),
-    summary: z.string(),
-    technologies: z.array(z.string()),
-    status: z.enum(['live', 'active', 'building', 'complete', 'archived']).optional(),
-    metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
-    order: z.number(),
-    featured: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      category: z.string(),
+      /** Short mono line, e.g. "Market data · analytics · visualization". */
+      tagline: z.string(),
+      summary: z.string(),
+      technologies: z.array(z.string()),
+      status: z.enum(['live', 'active', 'building', 'complete', 'archived']).optional(),
+      metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+      order: z.number(),
+      featured: z.boolean().default(false),
+      /** Screenshot shown on the project card and, without a video, in the page header. */
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+      /** Walkthrough video in public/, shown in the page header. */
+      video: z.object({ src: z.string(), poster: z.string(), label: z.string() }).optional(),
+    }),
 });
 
 export const collections = { projects };

@@ -14,6 +14,12 @@ metrics:
     value: '4'
 order: 1
 featured: true
+cover: ../../assets/projects/trace/01-h100-overview.png
+coverAlt: TRACE showing the NVIDIA H100 supply chain on a 3D globe, with the product panel open.
+video:
+  src: /projects/trace/trace-h100-walkthrough.mp4
+  poster: /projects/trace/trace-h100-walkthrough-poster.jpg
+  label: Walkthrough of TRACE tracing the NVIDIA H100 supply chain on the globe.
 ---
 
 ## Overview
@@ -38,6 +44,9 @@ Every supply graph is a hand-researched dataset that has to pass validation befo
 
 Physical flow (wafer → die → package) is kept apart from production dependencies (EUV scanners, CMP slurry), so the graph shows both what ends up in the product and what the chain can't run without.
 
+![Evidence panel for the GH100 GPU die, listing the TSMC 20-F filing and technical sources, with quoted facts for transistor count and die area](../../assets/projects/trace/02-h100-source-evidence.png)
+*Every claim opens its evidence. The GH100 die's facts are quoted word for word from the sources behind them, each with its tier and date.*
+
 ## Data
 
 - **NVIDIA:** FY2026 10-K revenue lines, Grace Blackwell NVL72 racks and networking, down through TSMC, HBM, advanced packaging, EUV tools and Form SD smelters.
@@ -45,6 +54,9 @@ Physical flow (wafer → die → package) is kept apart from production dependen
 - **Tesla:** Model Y and Megapack/Powerwall, including four cell sources, cathode and lithium refining, rear-motor magnets and the giga-cast underbody.
 
 Tesla's graph was built with no code changes, which shows the model works outside semiconductors.
+
+![Flow chart of the NVIDIA H100 bill of materials, running from raw materials such as silicon, cobalt and tin through wafers and components to the finished GPU](../../assets/projects/trace/03-h100-supply-chain.png)
+*The H100 traced from raw materials to the finished GPU. Line style shows confidence: solid green is confirmed, dashed amber is inferred.*
 
 Two pipelines run alongside the graph. **Filing extraction** uses Claude Haiku 4.5 to pull named suppliers and purchased inputs from annual reports, and a claim counts only if its quote is found in the filing. **Commodity research** searches the web for commodities the chain uses beyond what the filings say, and every finding must carry a citation that names the commodity.
 
@@ -64,4 +76,13 @@ Search for a ticker (NVDA, TSLA) to open its supply graph on the globe. Discs ma
 
 Choosing a product such as the NVIDIA H100 or Tesla Model Y narrows the globe to that product's chain and opens a flow chart from raw materials through processing, suppliers and components to the finished product.
 
+![TRACE globe centred on East Asia with flows between sites in China, Japan, South Korea, Taiwan and Thailand, beside the Inside NVIDIA H100 panel](../../assets/projects/trace/01-h100-overview.png)
+*Choosing the H100 narrows the globe to that product's sites and flows, and opens its product panel.*
+
 **What would it touch?** Pick a raw-material price rise or a country disruption to see the affected steps, which of them have no evidenced alternative site, and which products and revenue lines are exposed.
+
+![Country disruption view for Taiwan, showing the GH100 GPU die at TSMC Fab 18 has no evidenced alternative site](../../assets/projects/trace/04-h100-taiwan-disruption.png)
+*A Taiwan disruption: the GH100 die has no evidenced site outside Taiwan, and three of four modelled NVIDIA product families are touched.*
+
+![Material price view for tin, showing the physical path from tin through lead-free solder and the CoWoS-S package to the H100](../../assets/projects/trace/05-h100-tin-exposure.png)
+*A tin price rise: the path runs through solder into the package, and its weakest link is inferred, so the result is labelled inferred.*

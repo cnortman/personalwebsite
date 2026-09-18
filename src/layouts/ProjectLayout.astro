@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro';
+import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 import Sparkline from '../components/charts/Sparkline.astro';
 import Status from '../components/ui/Status.astro';
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const { project, headings, index, next } = Astro.props;
-const { title, summary, category, tagline, technologies, status, metrics } = project.data;
+const { title, summary, category, tagline, technologies, status, metrics, cover, coverAlt, video } = project.data;
 const sections = headings.filter((heading) => heading.depth === 2);
 ---
 
@@ -66,8 +67,27 @@ const sections = headings.filter((heading) => heading.depth === 2);
           </dl>
         </div>
 
-        <div class="visual" transition:name={`project-visual-${project.id}`}>
-          <Sparkline seed={project.id} width={1200} height={220} />
+        <div class:list={['visual', { 'visual--media': video || cover }]} transition:name={`project-visual-${project.id}`}>
+          {
+            video ? (
+              <video
+                class="media"
+                src={video.src}
+                poster={video.poster}
+                aria-label={video.label}
+                controls
+                muted
+                loop
+                playsinline
+                autoplay
+                preload="metadata"
+              />
+            ) : cover ? (
+              <Image class="media" src={cover} alt={coverAlt ?? ''} widths={[800, 1400, 2000]} sizes="100vw" loading="eager" />
+            ) : (
+              <Sparkline seed={project.id} width={1200} height={220} />
+            )
+          }
         </div>
       </div>
     </header>
@@ -108,6 +128,17 @@ const sections = headings.filter((heading) => heading.depth === 2);
     }
   </article>
 </BaseLayout>
+
+<script>
+  // Header videos autoplay muted; leave them paused for visitors who prefer reduced motion.
+  document.addEventListener('astro:page-load', () => {
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll<HTMLVideoElement>('.visual video').forEach((video) => {
+      video.autoplay = false;
+      video.pause();
+    });
+  });
+</script>
 
 <style>
   .project-header {
@@ -171,6 +202,20 @@ const sections = headings.filter((heading) => heading.depth === 2);
     padding-block: var(--space-4);
     border-block: 1px solid var(--color-border);
     color: var(--color-accent);
+  }
+
+  .visual--media {
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .media {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .body {
@@ -268,6 +313,26 @@ const sections = headings.filter((heading) => heading.depth === 2);
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.875em;
+  }
+
+  .prose :global(p:has(> img)) {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .prose :global(p > img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: var(--space-1);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .prose :global(p:has(> img) em) {
+    font-style: normal;
   }
 
   .prose :global(blockquote) {
