@@ -5,6 +5,9 @@ export interface Metric {
 
 export interface Role {
   title: string;
+  /** Shown under the title in the detailed view, e.g. "Oct 2024 – Jun 2026". */
+  dates?: string;
+  location?: string;
   note?: string;
   metrics: Metric[];
   highlights: string[];
@@ -12,7 +15,7 @@ export interface Role {
 }
 
 export interface ExperienceEntry {
-  /** Anchor on the experience page, e.g. /experience#deloitte-2025. */
+  /** Anchor on the experience page, e.g. /experience#deloitte-2024. */
   id: string;
   year: number;
   organization: string;
@@ -21,31 +24,28 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
-    id: 'deloitte-2025',
-    year: 2025,
+    id: 'deloitte-2024',
+    year: 2024,
     organization: 'Deloitte',
     roles: [
       {
         title: 'Audit Senior Associate',
-        metrics: [{ value: '$1T+', label: 'AUM under valuation procedures' }],
-        highlights: [
-          'Perform quarterly fair value and ASC 820 valuation procedures across fund complexes exceeding $1T in AUM, spanning hedge funds, mutual funds, ETFs, fund-of-funds, and private credit vehicles.',
-          'Reperform and validate complex portfolio valuations — including Level 2 and 3 assets, derivatives, and alternative investments — prepared by fund administrators and external valuation specialists.',
-          'Communicate directly with C-suite executives and fund administrators to resolve valuation and accounting discrepancies, accelerating quarterly close timelines through structured working sessions.',
-          'Prepare and review valuation and audit workpapers while supervising and developing junior staff and interns, strengthening documentation quality and testing efficiency.',
-        ],
-        tools: ['Deloitte Tools', 'Excel'],
-      },
-      {
-        title: 'Intelligent Automation & Analytics Process Analyst',
+        dates: 'Oct 2024 – Jun 2026',
+        location: 'Costa Mesa, CA',
         metrics: [
-          { value: '1.2 → 4.6', label: 'Performance rating (of 5)' },
-          { value: '30+', label: 'Pages per analysis' },
+          { value: '$1T+', label: 'AUM under fair value procedures' },
+          { value: '1.2 → 4.6', label: 'Unicus rating (of 5)' },
+          { value: '30+', label: 'Pages per structured report' },
         ],
         highlights: [
-          'Engineered an AI-driven reporting tool converting deal interview transcripts into 30+ page structured analyses on FP&A, tax, and controls risk, lifting internal performance ratings from 1.2 to 4.6 out of 5.',
+          'Redesigned and delivered v2 of "Unicus," an internal AI-powered IPO readiness assessment tool, raising its internal performance rating from 1.2/5 to 4.6/5.',
+          'Engineered a multi-stage LLM-to-LLM prompt architecture that converts unstructured M&A interview transcripts into 30+ page structured reports covering FP&A, tax, controls, and reporting risk.',
+          'Led transaction testing and ASC 820 fair value workstreams across $1T+ AUM fund complexes spanning mutual funds, ETFs, hedge funds, fund-of-funds, and private credit.',
+          'Validated valuation inputs and data integrity for complex Level II/III holdings, derivatives, and alternative investments within multi-entity fund structures.',
+          'Diagnosed and resolved accounting issues with C-suite leaders and fund administrators through structured working sessions, accelerating close timelines.',
+          'Supervised and coached junior staff and interns, reviewing workpaper documentation for accuracy and streamlining testing procedures to improve team efficiency.',
         ],
-        tools: ['Python', 'AWS', 'Claude'],
+        tools: ['Fair Value (ASC 820)', 'Level II/III Investments', 'LLM Prompt Engineering', 'Python', 'Excel'],
       },
     ],
   },
@@ -56,16 +56,22 @@ export const experience: ExperienceEntry[] = [
     roles: [
       {
         title: 'Audit and M&A Advisory Intern',
+        dates: 'Jan 2024 – Mar 2024',
+        location: 'Irvine, CA',
         metrics: [
-          { value: '4+', label: 'Middle-market transactions' },
-          { value: '65+', label: 'SKUs price-tested' },
+          { value: '$4.0M → $5.7M', label: 'Sell-side adjusted EBITDA' },
+          { value: '4', label: 'Middle-market transactions' },
+          { value: '3+ hrs', label: 'Saved per engagement' },
           { value: '427', label: 'Containers reconciled' },
         ],
         highlights: [
-          'Conducted buy-side and sell-side financial due diligence on 4+ middle-market transactions, identifying cost discrepancies that materially impacted deal valuation.',
-          'Led inventory price testing across 65+ SKUs, reconciling cost flows across 427 international containers to validate margin integrity for a global e-commerce client.',
+          'Developed an Excel VBA macro automating preprocessing of QuickBooks trial balances into quality of earnings databooks, saving 3+ hours per engagement.',
+          'Consolidated monthly trial balances and mapped accounts into standardized groupings to build income statements, balance sheets, and three-year monthly working capital schedules.',
+          'Performed quality of earnings diligence on 4 middle-market buy-side and sell-side transactions, analyzing EBITDA bridges, working capital seasonality, and customer concentration.',
+          'Quantified management, pro forma, and diligence adjustments and tied out cash proofs, supporting sell-side adjusted EBITDA of $5.7M, up from $4.0M reported.',
+          'Reconciled cost flows across 427 international containers and 65+ SKUs, validating inventory pricing data and margin integrity for a global e-commerce client.',
         ],
-        tools: ['Mergers and Acquisitions', 'QOEs', 'Buy-side Transactions', 'Sell-side Transactions', 'Middle-market'],
+        tools: ['Quality of Earnings', 'EBITDA Normalization', 'Net Working Capital', 'Excel VBA', 'QuickBooks'],
       },
     ],
   },
@@ -76,17 +82,17 @@ export const experience: ExperienceEntry[] = [
     roles: [
       {
         title: 'Audit and Assurance Intern',
-        note: 'Moved to Robotic Process Automation',
-        metrics: [
-          { value: '1 of 2', label: 'Global RPA interns' },
-          { value: '2+ hrs', label: 'Saved per engagement' },
-        ],
+        dates: 'Jun 2023 – Aug 2023',
+        location: 'Costa Mesa, CA',
+        note: 'Controllership Transformation · RPA',
+        metrics: [{ value: '2+ hrs', label: 'Saved per engagement' }],
         highlights: [
-          'Resume selected from the starting class to be 1 of 2 global RPA interns.',
-          'Supported Robotic Process Automation (RPA) implementations as a member of the Accounting & Reporting Advisory (Controllership Transformation) team.',
-          'Developed a dynamic Excel VBA automation tool converting Process Quality Documents into client-ready presentations, reducing preparation time by 2+ hours per engagement.',
+          'Selected for the Controllership Transformation team within Accounting & Reporting Advisory to support UiPath Robotic Process Automation (RPA) deployments.',
+          'Built an automation assessment workflow that captured business process details through intake forms and generated client-ready PowerPoint reports on automation potential.',
+          'Scored automation candidates on a three-dimensional framework weighing build difficulty against ROI, enabling clients to prioritize RPA build-out opportunities.',
+          'Leveraged SharePoint, Copilot Studio, and Excel VBA to automate assessment reporting, cutting preparation time by 2+ hours per engagement.',
         ],
-        tools: ['Python', 'Excel VBA', 'PQDs'],
+        tools: ['UiPath (RPA)', 'SharePoint', 'Copilot Studio', 'Excel VBA'],
       },
     ],
   },
@@ -97,13 +103,49 @@ export const experience: ExperienceEntry[] = [
     roles: [
       {
         title: 'Program Associate',
+        dates: 'Oct 2022 – Jun 2023',
+        location: 'Irvine, CA',
         metrics: [{ value: '300+', label: 'Candidates tracked' }],
         highlights: [
-          'Designed an executive dashboard in Power BI providing Board-level oversight of LIFEvest program performance and outreach metrics.',
-          'Automated applicant tracking for 300+ candidates using Python, improving administrative efficiency within the existing Zengine and Constant Contact systems.',
+          'Designed an executive dashboard for Board oversight of LIFEvest program performance and outreach metrics.',
+          'Automated applicant tracking for 300+ candidates using Python, improving data management efficiency.',
         ],
-        tools: ['Python', 'SQL', 'Power BI', 'Zengine', 'Constant Contact'],
+        tools: ['Python', 'Dashboard Design'],
       },
+    ],
+  },
+];
+
+/** From the resume; shown on the resume page. */
+export const education = {
+  school: 'University of California, Irvine',
+  degree: 'Bachelor of Business Administration',
+  graduated: 'June 2024',
+  activities: ['Beta Alpha Psi', 'Accounting Association', 'Undergraduate Business Association'],
+};
+
+export const skills = [
+  {
+    label: 'Microsoft 365 & Automation',
+    items: ['SharePoint', 'Copilot Studio', 'UiPath (RPA)', 'Advanced Excel (VBA)', 'QuickBooks', 'Word', 'PowerPoint'],
+  },
+  {
+    label: 'Technical',
+    items: ['Python', 'SQL', 'HTML', 'CSS', 'JavaScript', 'XPath', 'RSS Feeds', 'LLM Prompt Engineering', 'Dashboard Design'],
+  },
+  {
+    label: 'Domain',
+    items: [
+      'Mutual Funds',
+      'ETFs',
+      'Hedge Funds',
+      'Private Credit',
+      'Fair Value (ASC 820)',
+      'Level II/III Investments',
+      'Quality of Earnings',
+      'EBITDA Normalization',
+      'Net Working Capital Analysis',
+      'Business Process Assessment',
     ],
   },
 ];

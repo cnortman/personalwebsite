@@ -1,7 +1,6 @@
 /** Evidence a skill links to: a work-experience role or a project. */
 export const references = {
-  'deloitte-audit': { kind: 'experience', label: 'Deloitte · Audit Senior Associate', href: '/experience#deloitte-2025' },
-  'deloitte-ai': { kind: 'experience', label: 'Deloitte · Intelligent Automation & Analytics', href: '/experience#deloitte-2025' },
+  'deloitte-audit': { kind: 'experience', label: 'Deloitte · Audit Senior Associate', href: '/experience#deloitte-2024' },
   hcvt: { kind: 'experience', label: 'HCVT · Audit and M&A Advisory', href: '/experience#hcvt-2024' },
   'deloitte-rpa': { kind: 'experience', label: 'Deloitte · Audit and Assurance (RPA)', href: '/experience#deloitte-2023' },
   uci: { kind: 'experience', label: 'UCI · Program Associate', href: '/experience#uci-2022' },
@@ -30,7 +29,7 @@ export const disciplines: Discipline[] = [
     label: 'Finance',
     skills: [
       { id: 'valuation', label: 'Valuation', refs: ['deloitte-audit', 'hcvt'] },
-      { id: 'accounting', label: 'Accounting', refs: ['deloitte-audit', 'deloitte-rpa'] },
+      { id: 'accounting', label: 'Accounting', refs: ['deloitte-audit', 'hcvt', 'deloitte-rpa'] },
       { id: 'investment-analysis', label: 'Investment Analysis', refs: ['blackwater', 'trace'] },
       { id: 'audit', label: 'Audit', refs: ['deloitte-audit', 'hcvt', 'deloitte-rpa'] },
       { id: 'due-diligence', label: 'M&A Due Diligence', refs: ['hcvt'] },
@@ -53,9 +52,9 @@ export const disciplines: Discipline[] = [
     id: 'software',
     label: 'Software',
     skills: [
-      { id: 'python', label: 'Python', refs: ['deloitte-ai', 'deloitte-rpa', 'uci', 'blackwater', 'trace'] },
-      { id: 'automation', label: 'Automation', refs: ['deloitte-ai', 'deloitte-rpa', 'uci'] },
-      { id: 'ai', label: 'AI & LLMs', refs: ['deloitte-ai', 'trace'] },
+      { id: 'python', label: 'Python', refs: ['deloitte-audit', 'uci', 'blackwater', 'trace'] },
+      { id: 'automation', label: 'Automation', refs: ['deloitte-audit', 'hcvt', 'deloitte-rpa', 'uci'] },
+      { id: 'ai', label: 'AI & LLMs', refs: ['deloitte-audit', 'trace'] },
       { id: 'apis', label: 'APIs', refs: ['blackwater', 'trace'] },
       { id: 'typescript', label: 'TypeScript', refs: ['site', 'trace'] },
       { id: 'react', label: 'React', refs: ['site', 'trace'] },

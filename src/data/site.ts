@@ -5,7 +5,7 @@ export const site = {
   description:
     'Finance-oriented technologist who learns complex systems, understands the underlying business problem, and turns analysis into working software.',
   // Put the PDF in public/resume/ and set e.g. '/resume/chase-nortman-resume.pdf'.
-  resumePdf: '',
+  resumePdf: '/resume/chase-nortman-resume.pdf',
 };
 
 export const nav = [
@@ -16,8 +16,8 @@ export const nav = [
 // Leave a value empty to hide that link everywhere.
 export const links = {
   github: 'https://github.com/cnortman',
-  linkedin: '',
-  email: '',
+  linkedin: 'https://www.linkedin.com/in/chase-nortman-550326184/',
+  email: 'chase.nortman00@gmail.com',
 };
 
 export const contactLinks = [

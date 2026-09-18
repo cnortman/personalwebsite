@@ -33,6 +33,9 @@ const { detailed = false } = Astro.props;
                           </span>
                         )}
                       </p>
+                      {detailed && (role.dates || role.location) && (
+                        <p class="role__meta mono">{[role.dates, role.location].filter(Boolean).join(' · ')}</p>
+                      )}
                       {detailed && role.metrics.length > 0 && (
                         <dl class="metrics">
                           {role.metrics.map((metric) => (
@@ -154,6 +157,13 @@ const { detailed = false } = Astro.props;
   }
 
   .role__note {
+    color: var(--color-text-muted);
+  }
+
+  .role__meta {
+    margin-top: 4px;
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
     color: var(--color-text-muted);
   }
 

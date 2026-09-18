@@ -2,36 +2,110 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
 import Timeline from '../../components/experience/Timeline.astro';
+import { education, skills } from '../../data/experience';
 import { site } from '../../data/site';
 ---
 
-<BaseLayout title="Resume">
+<BaseLayout title="Resume" description="Resume of Chase Nortman: fund valuation audit, M&A due diligence, and automation.">
   <PageHeader
     eyebrow="Resume"
     title="Resume"
-    lede="The PDF is the canonical version. An interactive version in the site's own visual language is on the way."
+    lede="Download the PDF, or read the full version below: experience, education, and skills."
   >
-    {
-      site.resumePdf ? (
-        <a class="button button--primary" href={site.resumePdf}>
-          Download PDF <span aria-hidden="true">↓</span>
-        </a>
-      ) : (
-        <p class="chip">PDF · coming soon</p>
-      )
-    }
+    <a class="button button--primary" href={site.resumePdf} download="Chase Nortman - Resume.pdf">
+      Download PDF <span aria-hidden="true">↓</span>
+    </a>
   </PageHeader>
 
   <section class="container page-body" aria-labelledby="resume-experience">
     <h2 id="resume-experience" class="eyebrow">Experience</h2>
-    <div class="timeline">
+    <div class="block">
       <Timeline detailed />
     </div>
+  </section>
+
+  <section class="container page-body" aria-labelledby="resume-education">
+    <h2 id="resume-education" class="eyebrow">Education</h2>
+    <div class="grid row">
+      <p class="mono muted row__label">{education.graduated}</p>
+      <div class="row__body">
+        <p class="row__title">{education.school}</p>
+        <p class="row__text">{education.degree}</p>
+        <ul class="tags" role="list" aria-label="Activities">
+          {education.activities.map((activity) => <li class="chip">{activity}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="container page-body" aria-labelledby="resume-skills">
+    <h2 id="resume-skills" class="eyebrow">Skills</h2>
+    {
+      skills.map((group) => (
+        <div class="grid row">
+          <p class="mono muted row__label">{group.label}</p>
+          <ul class="tags row__body" role="list">
+            {group.items.map((item) => (
+              <li class="chip">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </section>
 </BaseLayout>
 
 <style>
-  .timeline {
+  .block {
     margin-top: var(--space-3);
+  }
+
+  .row {
+    align-items: baseline;
+    row-gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  h2 + .row {
+    margin-top: var(--space-3);
+  }
+
+  .row__label {
+    grid-column: 1 / span 3;
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .row__body {
+    grid-column: 4 / -1;
+  }
+
+  .row__title {
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .row__text {
+    margin-top: 4px;
+    color: var(--color-text-secondary);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .row__text + .tags {
+    margin-top: var(--space-2);
+  }
+
+  @media (max-width: 719px) {
+    .row__label,
+    .row__body {
+      grid-column: 1 / -1;
+    }
   }
 </style>
