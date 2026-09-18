@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { project, headings, index, next } = Astro.props;
-const { title, summary, category, tagline, technologies, status, metrics, cover, coverAlt, video } = project.data;
+const { title, summary, category, tagline, technologies, status, metrics, cover, coverAlt, video, year } = project.data;
 const sections = headings.filter((heading) => heading.depth === 2);
 ---
 
@@ -65,6 +65,14 @@ const sections = headings.filter((heading) => heading.depth === 2);
                   <dd>
                     <Status status={status} />
                   </dd>
+                </div>
+              )
+            }
+            {
+              year && (
+                <div>
+                  <dt class="eyebrow muted">Year</dt>
+                  <dd class="mono">{year}</dd>
                 </div>
               )
             }

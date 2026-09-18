@@ -14,6 +14,8 @@ const projects = defineCollection({
       technologies: z.array(z.string()),
       status: z.enum(['live', 'active', 'building', 'complete', 'archived']).optional(),
       metrics: z.array(z.object({ label: z.string(), value: z.string() })).default([]),
+      /** Year the project was built, shown on its card and page. */
+      year: z.number().optional(),
       order: z.number(),
       featured: z.boolean().default(false),
       /** Show the card, but don't publish the case study or link to it. */

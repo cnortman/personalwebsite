@@ -10,12 +10,12 @@ interface Props {
 }
 
 const { project, index } = Astro.props;
-const { title, tagline, technologies, status, cover, coverAlt, locked } = project.data;
+const { title, tagline, technologies, status, cover, coverAlt, locked, year } = project.data;
 ---
 
 <article class:list={['card', { 'card--locked': locked }]}>
   <div class="top">
-    <span class="mono muted index">Project {padIndex(index + 1)}</span>
+    <span class="mono muted index">Project {padIndex(index + 1)}{year && ` · ${year}`}</span>
     {status && <Status status={status} />}
   </div>
 

@@ -2,12 +2,11 @@
 title: Blackwater Market Terminal
 category: Market Data
 tagline: Market data · screening · investor education
-summary: A market terminal built in 2020 to help the wave of new retail investors understand company financial health and the overall market.
+summary: A market terminal built in 2021 to help the wave of new retail investors understand company financial health and the overall market.
 technologies: [Excel, Python, Quandl API, Yahoo Finance API, Web Scrapers, FINRA, SEC EDGAR]
 status: archived
+year: 2021
 metrics:
-  - label: Built
-    value: '2020'
   - label: Screener categories
     value: '51'
   - label: Options per category

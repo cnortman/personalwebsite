@@ -5,6 +5,7 @@ tagline: Revenue → product → supplier → raw material
 summary: Traces what a public company's products are made of, who makes each part, where, and which raw materials sit underneath. Every link has a source, and anything unknown stays marked as unknown.
 technologies: [Python, FastAPI, PostgreSQL, PostGIS, TypeScript, React, Three.js, Astro, Claude, Docker]
 status: building
+year: 2026
 order: 1
 featured: true
 cover: ../../assets/projects/trace/01-h100-overview.png
