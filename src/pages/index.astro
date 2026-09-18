@@ -4,14 +4,11 @@ import Section from '../components/layout/Section.astro';
 import Intersection from '../components/intersection/Intersection.astro';
 import ProjectCard from '../components/projects/ProjectCard.astro';
 import Timeline from '../components/experience/Timeline.astro';
-import Status from '../components/ui/Status.astro';
-import { getProjects, padIndex } from '../lib/projects';
-import { learningLoop, systemFlow } from '../data/technologies';
+import { getProjects } from '../lib/projects';
 import { contactLinks } from '../data/site';
 
 const projects = await getProjects();
 const featured = projects.filter((project) => project.data.featured);
-const tracked = projects.filter((project) => project.data.status);
 const heroWords = ['Learning', 'Building', 'Analyzing'];
 ---
 
@@ -88,90 +85,7 @@ const heroWords = ['Learning', 'Building', 'Analyzing'];
     <a class="link-arrow more" href="/projects">All projects <span aria-hidden="true">→</span></a>
   </Section>
 
-  <Section id="system" index="05" label="Technical system" title="How the tools connect.">
-    <ol class="flow" role="list">
-      {
-        systemFlow.map((step, i) => (
-          <li class="flow__step">
-            <div class="flow__group">
-              {step.map((node) => (
-                <span class:list={['flow__node', { 'flow__node--domain': i === 0 || i === systemFlow.length - 1 }]}>
-                  {node}
-                </span>
-              ))}
-            </div>
-          </li>
-        ))
-      }
-    </ol>
-  </Section>
-
-  <Section id="learning" index="06" label="How I learn" title="I don't need to know everything before I start.">
-    <div class="grid">
-      <ol class="loop" role="list">
-        {
-          learningLoop.map((stage, i) => (
-            <li class:list={['loop__stage', { 'is-highlighted': stage === 'Build' }]}>
-              <span class="mono muted">{padIndex(i + 1)}</span>
-              {stage}
-            </li>
-          ))
-        }
-      </ol>
-      <blockquote class="quote">
-        <p class="eyebrow">Build</p>
-        <p class="h3">
-          I usually learn technologies fastest by building something that forces me to understand the underlying system.
-        </p>
-      </blockquote>
-    </div>
-  </Section>
-
-  <Section id="live" index="07" label="Live data" title="The site is connected to the world.">
-    <div class="live">
-      <div class="panel">
-        <p class="eyebrow muted panel__title">Project status</p>
-        <ul role="list" class="status-list">
-          {
-            tracked.map((project) => (
-              <li>
-                {project.data.locked ? (
-                  <span>{project.data.title}</span>
-                ) : (
-                  <a href={`/projects/${project.id}`}>{project.data.title}</a>
-                )}
-                {project.data.status && <Status status={project.data.status} />}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div class="panel">
-        <p class="eyebrow muted panel__title">GitHub activity</p>
-        <dl class="request">
-          <div><dt>Request</dt><dd>GET /api/github/activity</dd></div>
-          <div><dt>Status</dt><dd>In development</dd></div>
-        </dl>
-      </div>
-      <div class="panel">
-        <p class="eyebrow muted panel__title">Market data</p>
-        <dl class="request">
-          <div><dt>Request</dt><dd>GET /api/market/overview</dd></div>
-          <div><dt>Status</dt><dd>In development</dd></div>
-        </dl>
-      </div>
-    </div>
-  </Section>
-
-  <Section id="notes" index="08" label="Notes" title="Short research notes.">
-    <p class="lede">
-      Financial analytics, SQL, data engineering, investment analysis, and what I learn while building software. The
-      first notes are in progress.
-    </p>
-    <a class="link-arrow more" href="/notes">Notes <span aria-hidden="true">→</span></a>
-  </Section>
-
-  <Section id="contact" index="09" label="Contact" title="Let's build something useful.">
+  <Section id="contact" index="05" label="Contact" title="Contact me">
     <ul class="contact" role="list">
       {
         contactLinks.map((link) => (
@@ -301,138 +215,7 @@ const heroWords = ['Learning', 'Building', 'Analyzing'];
     margin-top: var(--space-5);
   }
 
-  /* 05 Technical system */
-  .flow {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .flow__step {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .flow__step:not(:last-child)::after {
-    content: '→' / '';
-    font-family: var(--font-mono);
-    color: var(--color-text-muted);
-  }
-
-  .flow__group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-
-  .flow__node {
-    padding: 10px var(--space-2);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    text-align: center;
-  }
-
-  .flow__node--domain {
-    border-color: var(--color-border-strong);
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  /* 06 How I learn */
-  .loop {
-    grid-column: 1 / span 7;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: var(--space-1);
-  }
-
-  .loop__stage {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 10px;
-    padding: 10px var(--space-2);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-  }
-
-  .loop__stage .mono {
-    font-size: var(--text-xs);
-  }
-
-  .loop__stage.is-highlighted {
-    border-color: var(--color-accent);
-  }
-
-  .quote {
-    grid-column: 9 / span 4;
-    padding-left: var(--space-3);
-    border-left: 2px solid var(--color-accent);
-  }
-
-  .quote .h3 {
-    margin-top: var(--space-1);
-  }
-
-  /* 07 Live data */
-  .live {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--grid-gap);
-  }
-
-  .panel__title {
-    margin-bottom: var(--space-2);
-  }
-
-  .status-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-2);
-    padding-block: 10px;
-    border-top: 1px solid var(--color-border);
-    font-size: var(--text-sm);
-  }
-
-  .status-list a:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .request {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-  }
-
-  .request div {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: var(--space-2);
-    padding-block: 10px;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .request dt {
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .request dd {
-    color: var(--color-text-secondary);
-    overflow-wrap: anywhere;
-  }
-
-  /* 09 Contact */
+  /* 05 Contact */
   .contact {
     display: flex;
     flex-wrap: wrap;
@@ -467,14 +250,8 @@ const heroWords = ['Learning', 'Building', 'Analyzing'];
     }
 
     .hero__copy,
-    .readout,
-    .loop,
-    .quote {
+    .readout {
       grid-column: 1 / -1;
-    }
-
-    .live {
-      grid-template-columns: minmax(0, 1fr);
     }
   }
 
@@ -490,21 +267,6 @@ const heroWords = ['Learning', 'Building', 'Analyzing'];
 
     .hero__lines span:nth-child(4) {
       border-inline-end: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
-    }
-
-    .flow,
-    .flow__step {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .flow__step:not(:last-child)::after {
-      content: '↓' / '';
-      padding-left: var(--space-2);
-    }
-
-    .flow__group {
-      flex-direction: row;
     }
 
     .contact a {

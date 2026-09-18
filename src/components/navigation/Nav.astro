@@ -32,14 +32,6 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     </nav>
 
     <div class="actions">
-      {
-        site.openToOpportunities && (
-          <span class="availability">
-            <span class="availability__dot" aria-hidden="true" />
-            Open to opportunities
-          </span>
-        )
-      }
       <a href="/resume" class="button button--small" aria-current={isActive('/resume') ? 'page' : undefined}>
         Resume
       </a>
@@ -126,33 +118,6 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     display: flex;
     align-items: center;
     gap: 12px;
-  }
-
-  .availability {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    margin-right: var(--space-1);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    white-space: nowrap;
-  }
-
-  .availability__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-positive);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-positive) 20%, transparent);
-  }
-
-  @media (max-width: 1180px) {
-    .availability {
-      display: none;
-    }
   }
 
   @media (max-width: 719px) {
